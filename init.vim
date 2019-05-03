@@ -94,6 +94,8 @@ set sw=4
 set ts=4
 autocmd Filetype ruby set softtabstop=2 sw=2 ts=2
 autocmd Filetype sql set softtabstop=2 sw=2 ts=2
+autocmd Filetype yml set softtabstop=2 sw=2 ts=2
+autocmd Filetype yaml set softtabstop=2 sw=2 ts=2
 
 let g:strip_whitespace_on_save = 1
 let g:sql_type_default = 'pgsql'
