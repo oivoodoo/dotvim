@@ -10,6 +10,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-eunuch'
@@ -48,6 +49,13 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'slashmili/alchemist.vim'
 
+Plug 'sbdchd/neoformat'
+
+Plug 'posva/vim-vue'
+Plug 'Quramy/tsuquyomi'
+Plug 'Quramy/tsuquyomi-vue'
+Plug 'posva/vim-vue'
+
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
@@ -65,10 +73,6 @@ set nonumber
 set hlsearch
 set ruler
 
-filetype on
-filetype plugin on
-filetype indent on
-
 syntax on
 
 set hidden
@@ -80,6 +84,12 @@ set splitright
 set splitbelow
 set expandtab
 
+set nocompatible      " We're running Vim, not Vi!
+syntax on             " Enable syntax highlighting
+filetype on           " Enable filetype detection
+filetype indent on    " Enable filetype-specific indenting
+filetype plugin on    " Enable filetype-specific plugins
+
 " Use Ag (the silver searcher) instack of Ack
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -89,17 +99,20 @@ au BufRead,BufNewFile *.hql set filetype=sql
 au BufRead,BufNewFile *.hql.j2 set filetype=sql
 au BufRead,BufNewFile Dockerfile.build set filetype=Dockerfile
 au BufRead,BufNewFile Dockerfile.release set filetype=Dockerfile
+au BufRead,BufNewFile *.vue set filetype=vue
+au BufRead,BufNewFile *.yml.env set filetype=yaml
+au BufRead,BufNewFile *.yml.test set filetype=yaml
 
 set sw=4
 set ts=4
-autocmd Filetype ruby set softtabstop=2 sw=2 ts=2
-autocmd Filetype sql set softtabstop=2 sw=2 ts=2
-autocmd Filetype yml set softtabstop=2 sw=2 ts=2
-autocmd Filetype yaml set softtabstop=2 sw=2 ts=2
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd Filetype sql set expandtab softtabstop=2 sw=2 ts=2
+autocmd Filetype yml set expandtab softtabstop=2 sw=2 ts=2
+autocmd Filetype yaml set expandtab softtabstop=2 sw=2 ts=2
 
 let g:strip_whitespace_on_save = 1
 let g:sql_type_default = 'pgsql'
-
 
 nnoremap <silent> <leader>t :TestFile<cr>
 
@@ -109,8 +122,11 @@ nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 
+nmap <silent> ,, :Commentary<CR>
+
 set termguicolors
 set background=light
 colorscheme NeoSolarized
 
 source ~/.config/nvim/go.vim
+source ~/.config/nvim/ruby.vim
