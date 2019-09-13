@@ -1,8 +1,6 @@
-let g:python_host_prog = '~/.pyenv/versions/2.7.14/envs/neovim2/bin/python'
-let g:python3_host_prog = '~/.pyenv/versions/3.6.6/envs/neovim3/bin/python'
-
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'iCyMind/NeoSolarized'
 
 Plug 'davidhalter/jedi-vim'
@@ -57,6 +55,9 @@ Plug 'Quramy/tsuquyomi-vue'
 Plug 'posva/vim-vue'
 
 call plug#end()
+
+let g:python_host_prog = expand('~/.pyenv/versions/2.7.14/envs/neovim2/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/3.6.6/envs/neovim3/bin/python')
 
 let g:deoplete#enable_at_startup = 1
 
@@ -126,7 +127,8 @@ nmap <silent> ,, :Commentary<CR>
 
 set termguicolors
 set background=light
-colorscheme NeoSolarized
+ "colorscheme NeoSolarized
+colorscheme dim
 
 source ~/.config/nvim/go.vim
 source ~/.config/nvim/ruby.vim
