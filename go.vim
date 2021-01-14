@@ -36,3 +36,4 @@ let deoplete#sources#go#gocode_binary='~/.local/share/go/bin/gocode'
 
 let g:go_snippet_engine = "neosnippet"
 
+nnoremap <leader>t :GoTestFunc<cr>

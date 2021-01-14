@@ -1,10 +1,20 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'vim-scripts/DirDiff.vim'
+Plug 'jdonaldson/vaxe'
+Plug 'sunaku/vim-dasht'
 Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'iCyMind/NeoSolarized'
 
 Plug 'davidhalter/jedi-vim'
 
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'git://github.com/wakatime/vim-wakatime.git'
+Plug 'godlygeek/tabular'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -19,9 +29,9 @@ Plug 'lifepillar/pgsql.vim'
 Plug 'ntpeters/vim-better-whitespace'
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim'
+  " Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
@@ -29,11 +39,12 @@ endif
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
-Plug 'zchee/deoplete-jedi'
+" Plug 'zchee/deoplete-jedi'
+" Plug 'villainy/deoplete-dart', { 'for': 'dart' }
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.local/share/nvim/plugged/gocode/nvim/symlink.sh' }
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+" Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -54,12 +65,28 @@ Plug 'Quramy/tsuquyomi'
 Plug 'Quramy/tsuquyomi-vue'
 Plug 'posva/vim-vue'
 
+Plug 'neomake/neomake'
+
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'Shougo/denite.nvim'
+
+
+" Plug 'elixir-lsp/elixir-ls', { 'do': { -> g:ElixirLS.compile() } }
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'iamcco/coc-tailwindcss'
+
+Plug 'tpope/vim-projectionist'
+" Plug 'slashmili/alchemist.vim'
+" Plug 'powerman/vim-plugin-AnsiEsc'
+" Plug 'c-brenn/phoenix.vim'
+
 call plug#end()
 
 let g:python_host_prog = expand('~/.pyenv/versions/2.7.14/envs/neovim2/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/3.6.6/envs/neovim3/bin/python')
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 let mapleader = "\<Space>" 
 
@@ -132,3 +159,26 @@ colorscheme dim
 
 source ~/.config/nvim/go.vim
 source ~/.config/nvim/ruby.vim
+
+set backupdir=/tmp/
+set shortmess=A
+
+autocmd! BufWritePost * Neomake
+
+" search related docsets
+nnoremap <Leader>k :Dasht<Space>
+nnoremap <Leader><Leader>k :Dasht!<Space>
+
+
+" let g:lsc_server_commands = {'dart': 'dart_language_server'}
+" let g:lsc_auto_map = v:true
+" let g:lsc_dart_enable_completion_ml = v:false
+
+" let g:deoplete#sources#dart#dart_sdk_path='/usr/local/Cellar/dart/2.7.1'
+
+au BufEnter * syn match error contained "\<binding.pry\>"
+au BufEnter * syn match error contained "\<binding.remote_pry\>"
+au BufEnter * syn match error contained "\<binding.pry_remote\>"
+au BufEnter * syn match error contained "\<byebug\>"
+au BufEnter *.rb syn match error contained "\<debugger\>"
+
