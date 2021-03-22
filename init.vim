@@ -72,14 +72,14 @@ Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'Shougo/denite.nvim'
 
 
-" Plug 'elixir-lsp/elixir-ls', { 'do': { -> g:ElixirLS.compile() } }
+Plug 'elixir-editors/vim-elixir'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'iamcco/coc-tailwindcss'
+Plug 'iamcco/coc-tailwindcss'
 
 Plug 'tpope/vim-projectionist'
-" Plug 'slashmili/alchemist.vim'
-" Plug 'powerman/vim-plugin-AnsiEsc'
-" Plug 'c-brenn/phoenix.vim'
+Plug 'slashmili/alchemist.vim'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'c-brenn/phoenix.vim'
 
 call plug#end()
 
@@ -130,6 +130,7 @@ au BufRead,BufNewFile Dockerfile.release set filetype=Dockerfile
 au BufRead,BufNewFile *.vue set filetype=vue
 au BufRead,BufNewFile *.yml.env set filetype=yaml
 au BufRead,BufNewFile *.yml.test set filetype=yaml
+au BufRead,BufNewFile *.exs set filetype=elixir
 
 set sw=4
 set ts=4
