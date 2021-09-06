@@ -1,1 +1,1 @@
-/Users/akorsak/.local/share/nvim/plugged/gocode/nvim/ftplugin/go/gocomplete.vim
+/home/oivoodoo/.local/share/nvim/plugged/gocode/nvim/ftplugin/go/gocomplete.vim

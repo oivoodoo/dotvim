@@ -1,19 +1,15 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'vim-crystal/vim-crystal'
 Plug 'vim-scripts/DirDiff.vim'
-Plug 'jdonaldson/vaxe'
-Plug 'sunaku/vim-dasht'
 Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'iCyMind/NeoSolarized'
 
 Plug 'davidhalter/jedi-vim'
 
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'natebosch/vim-lsc'
-Plug 'natebosch/vim-lsc-dart'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'git://github.com/wakatime/vim-wakatime.git'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -22,7 +18,6 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-haml'
 Plug 'janko/vim-test'
 
 Plug 'lifepillar/pgsql.vim'
@@ -40,7 +35,6 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
 " Plug 'zchee/deoplete-jedi'
-" Plug 'villainy/deoplete-dart', { 'for': 'dart' }
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.local/share/nvim/plugged/gocode/nvim/symlink.sh' }
@@ -56,39 +50,41 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'Yggdroot/indentLine'
 
-Plug 'slashmili/alchemist.vim'
-
 Plug 'sbdchd/neoformat'
 
-Plug 'posva/vim-vue'
 Plug 'Quramy/tsuquyomi'
 Plug 'Quramy/tsuquyomi-vue'
 Plug 'posva/vim-vue'
 
 Plug 'neomake/neomake'
+Plug 'neovim/nvim-lspconfig'
 
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'Shougo/denite.nvim'
+
+Plug 'pangloss/vim-javascript'    " JavaScript support
+Plug 'leafgarland/typescript-vim' " TypeScript syntax
+Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+Plug 'jparise/vim-graphql'        " GraphQL syntax
 
 
 Plug 'elixir-editors/vim-elixir'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'iamcco/coc-tailwindcss'
+Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
 Plug 'tpope/vim-projectionist'
-Plug 'slashmili/alchemist.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'c-brenn/phoenix.vim'
 
 call plug#end()
 
-let g:python_host_prog = expand('~/.pyenv/versions/2.7.14/envs/neovim2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/3.6.6/envs/neovim3/bin/python')
+let g:python_host_prog = expand('/usr/bin/python2')
+let g:python3_host_prog = expand('~/.asdf/shims/python3')
 
 " let g:deoplete#enable_at_startup = 1
 
-let mapleader = "\<Space>" 
+let mapleader = "\<Space>"
 
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
@@ -139,6 +135,8 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd Filetype sql set expandtab softtabstop=2 sw=2 ts=2
 autocmd Filetype yml set expandtab softtabstop=2 sw=2 ts=2
 autocmd Filetype yaml set expandtab softtabstop=2 sw=2 ts=2
+autocmd Filetype ts set expandtab softtabstop=2 sw=2 ts=2
+autocmd Filetype tsx set expandtab softtabstop=2 sw=2 ts=2
 
 let g:strip_whitespace_on_save = 1
 let g:sql_type_default = 'pgsql'
@@ -166,15 +164,11 @@ set shortmess=A
 
 autocmd! BufWritePost * Neomake
 
-" search related docsets
-nnoremap <Leader>k :Dasht<Space>
-nnoremap <Leader><Leader>k :Dasht!<Space>
 
 
 " let g:lsc_server_commands = {'dart': 'dart_language_server'}
 " let g:lsc_auto_map = v:true
 " let g:lsc_dart_enable_completion_ml = v:false
-
 " let g:deoplete#sources#dart#dart_sdk_path='/usr/local/Cellar/dart/2.7.1'
 
 au BufEnter * syn match error contained "\<binding.pry\>"
@@ -183,3 +177,14 @@ au BufEnter * syn match error contained "\<binding.pry_remote\>"
 au BufEnter * syn match error contained "\<byebug\>"
 au BufEnter *.rb syn match error contained "\<debugger\>"
 
+let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-python']
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
