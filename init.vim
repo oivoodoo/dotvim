@@ -177,7 +177,7 @@ au BufEnter * syn match error contained "\<binding.pry_remote\>"
 au BufEnter * syn match error contained "\<byebug\>"
 au BufEnter *.rb syn match error contained "\<debugger\>"
 
-let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-python']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-python', 'coc-react-refactor', ]
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -188,3 +188,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
