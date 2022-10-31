@@ -1,11 +1,10 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'tikhomirov/vim-glsl'
 Plug 'vim-crystal/vim-crystal'
 Plug 'vim-scripts/DirDiff.vim'
 Plug 'jeffkreeftmeijer/vim-dim'
 Plug 'iCyMind/NeoSolarized'
-
-Plug 'davidhalter/jedi-vim'
 
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -19,14 +18,14 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-eunuch'
 Plug 'janko/vim-test'
+Plug 'jdonaldson/vaxe'
+Plug 'ziglang/zig.vim'
 
 Plug 'lifepillar/pgsql.vim'
 Plug 'ntpeters/vim-better-whitespace'
 
 if has('nvim')
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  " Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
@@ -34,14 +33,12 @@ endif
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
-" Plug 'zchee/deoplete-jedi'
-
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'nsf/gocode', { 'rtp': 'nvim', 'do': '~/.local/share/nvim/plugged/gocode/nvim/symlink.sh' }
-" Plug 'zchee/deoplete-go', { 'do': 'make'}
 
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
 Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 
@@ -72,6 +69,7 @@ Plug 'elixir-editors/vim-elixir'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'iamcco/coc-tailwindcss'
 Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+Plug 'mhinz/vim-mix-format'
 
 Plug 'tpope/vim-projectionist'
 Plug 'powerman/vim-plugin-AnsiEsc'
@@ -79,16 +77,20 @@ Plug 'c-brenn/phoenix.vim'
 
 call plug#end()
 
-let g:python_host_prog = expand('/usr/bin/python2')
+lua << EOF
+require("nnn").setup()
+EOF
+
+let g:python_host_prog = expand('~/.pyenv/shims/python2')
 let g:python3_host_prog = expand('~/.asdf/shims/python3')
 
-" let g:deoplete#enable_at_startup = 1
 
 let mapleader = "\<Space>"
 
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 nnoremap <silent> <leader>a :Ack 
+
 " switch between buffers
 nnoremap <leader>bb :buffers<cr>:b<space> 
 nnoremap <leader><tab> :b#<cr>
@@ -115,7 +117,7 @@ filetype indent on    " Enable filetype-specific indenting
 filetype plugin on    " Enable filetype-specific plugins
 
 " Use Ag (the silver searcher) instack of Ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir priv/static --ignore-dir deps --ignore-dir _build --ignore-dir .git --ignore-dir tmp --ignore-dir phx.gen.html'
 
 set clipboard=unnamed
 
@@ -127,6 +129,10 @@ au BufRead,BufNewFile *.vue set filetype=vue
 au BufRead,BufNewFile *.yml.env set filetype=yaml
 au BufRead,BufNewFile *.yml.test set filetype=yaml
 au BufRead,BufNewFile *.exs set filetype=elixir
+au BufRead,BufNewFile *.script set filetype=lua
+au BufRead,BufNewFile *.gui_script set filetype=lua
+au BufNewFile,BufRead *.script\|*.gui_script\|*.render_script\|*.editor_script\|*.lua_  setlocal filetype=lua
+au BufNewFile,BufRead *.vsh\|*.fsh\|*.fp\|*.vp setlocal filetype=glsl
 
 set sw=4
 set ts=4
@@ -169,7 +175,6 @@ autocmd! BufWritePost * Neomake
 " let g:lsc_server_commands = {'dart': 'dart_language_server'}
 " let g:lsc_auto_map = v:true
 " let g:lsc_dart_enable_completion_ml = v:false
-" let g:deoplete#sources#dart#dart_sdk_path='/usr/local/Cellar/dart/2.7.1'
 
 au BufEnter * syn match error contained "\<binding.pry\>"
 au BufEnter * syn match error contained "\<binding.remote_pry\>"
@@ -177,7 +182,7 @@ au BufEnter * syn match error contained "\<binding.pry_remote\>"
 au BufEnter * syn match error contained "\<byebug\>"
 au BufEnter *.rb syn match error contained "\<debugger\>"
 
-let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-python', 'coc-react-refactor', ]
+let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-pyright', 'coc-react-refactor', 'coc-clangd', 'coc-haxe', 'coc-zig', 'coc-lua', 'coc-defold-ide', 'coc-git', 'coc-rls']
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -191,3 +196,24 @@ nmap <silent> gr <Plug>(coc-references)
 
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+nnoremap <leader>n NnnExplorer<CR>
+vnoremap <leader>r NnnExplorer %:p:h<CR>
+
+nnoremap <space>h :CocCommand defold-ide.refactorHash<CR>
+vnoremap <space>h :CocCommand defold-ide.refactorHashVisual<CR>
+
+let g:jedi#completions_enabled = 0
+
+" let g:mix_format_on_save = 1
+
+set shortmess=a
+
+let g:coc_node_path = '~/.asdf/shims/node'
+let g:node_host_prog = '~/.asdf/shims/node'
+
+
+colorscheme lunar
+
+
+map <leader>r :NERDTreeFind<cr>
