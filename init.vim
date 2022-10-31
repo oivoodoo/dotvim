@@ -77,10 +77,6 @@ Plug 'c-brenn/phoenix.vim'
 
 call plug#end()
 
-lua << EOF
-require("nnn").setup()
-EOF
-
 let g:python_host_prog = expand('~/.pyenv/shims/python2')
 let g:python3_host_prog = expand('~/.asdf/shims/python3')
 
