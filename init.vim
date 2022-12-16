@@ -9,6 +9,9 @@ Plug 'iCyMind/NeoSolarized'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'NoahTheDuke/vim-just'
+
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -61,7 +64,9 @@ Plug 'Shougo/denite.nvim'
 
 Plug 'pangloss/vim-javascript'    " JavaScript support
 Plug 'leafgarland/typescript-vim' " TypeScript syntax
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
+Plug 'mxw/vim-jsx'
 Plug 'jparise/vim-graphql'        " GraphQL syntax
 
 
@@ -86,6 +91,8 @@ let mapleader = "\<Space>"
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
 nnoremap <silent> <leader>a :Ack 
+nnoremap <silent> <leader>et :TestFile<cr>
+nnoremap <silent> <leader>ef :MixFormat<cr>
 
 " switch between buffers
 nnoremap <leader>bb :buffers<cr>:b<space> 
@@ -129,6 +136,10 @@ au BufRead,BufNewFile *.script set filetype=lua
 au BufRead,BufNewFile *.gui_script set filetype=lua
 au BufNewFile,BufRead *.script\|*.gui_script\|*.render_script\|*.editor_script\|*.lua_  setlocal filetype=lua
 au BufNewFile,BufRead *.vsh\|*.fsh\|*.fp\|*.vp setlocal filetype=glsl
+au BufRead,BufNewFile *.script.ts set filetype=typescript
+au BufRead,BufNewFile *.gui_script.ts set filetype=typescript
+au BufRead,BufNewFile *.ts set filetype=typescript
+au BufRead,BufNewFile *.tsx set filetype=typescript.tsx
 
 set sw=4
 set ts=4
@@ -139,6 +150,13 @@ autocmd Filetype yml set expandtab softtabstop=2 sw=2 ts=2
 autocmd Filetype yaml set expandtab softtabstop=2 sw=2 ts=2
 autocmd Filetype ts set expandtab softtabstop=2 sw=2 ts=2
 autocmd Filetype tsx set expandtab softtabstop=2 sw=2 ts=2
+autocmd Filetype typescript set expandtab softtabstop=2 sw=2 ts=2
+autocmd Filetype typescript.tsx set expandtab softtabstop=2 sw=2 ts=2
+
+" light-grey
+hi tsxTypeBraces guifg=#999999
+" dark-grey
+hi tsxTypes guifg=#666666
 
 let g:strip_whitespace_on_save = 1
 let g:sql_type_default = 'pgsql'
@@ -178,6 +196,11 @@ au BufEnter * syn match error contained "\<binding.pry_remote\>"
 au BufEnter * syn match error contained "\<byebug\>"
 au BufEnter *.rb syn match error contained "\<debugger\>"
 
+autocmd BufWritePre *.ts Neoformat prettier
+autocmd BufWritePre *.tsx Neoformat prettier
+autocmd BufWritePre *.script.ts Neoformat prettier
+autocmd BufWritePre *.gui_script.ts Neoformat prettier
+
 let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-pyright', 'coc-react-refactor', 'coc-clangd', 'coc-haxe', 'coc-zig', 'coc-lua', 'coc-defold-ide', 'coc-git', 'coc-rls']
 
 " Remap keys for applying codeAction to the current line.
@@ -213,3 +236,14 @@ colorscheme lunar
 
 
 map <leader>r :NERDTreeFind<cr>
+
+let g:neoformat_try_node_exe = 1
+
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+set shortmess=a
+
+let g:neoformat_only_msg_on_error = 1
