@@ -1,3 +1,5 @@
 {
-  "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh"
+  "elixir.pathToElixirLS": "~/.config/elixir/elixir-ls/release/language_server.sh",
+  "coc.source.OmniSharp.enable" : true,
+  "coc.source.OmniSharp.triggerCharacters": "."
 }

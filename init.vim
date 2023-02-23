@@ -57,7 +57,6 @@ Plug 'Quramy/tsuquyomi-vue'
 Plug 'posva/vim-vue'
 
 Plug 'neomake/neomake'
-Plug 'neovim/nvim-lspconfig'
 
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'Shougo/denite.nvim'
@@ -80,6 +79,14 @@ Plug 'tpope/vim-projectionist'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'c-brenn/phoenix.vim'
 
+Plug 'stevearc/dressing.nvim'
+Plug 'ray-x/lsp_signature.nvim'
+
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+
+Plug 'neovim/nvim-lspconfig'
+
 call plug#end()
 
 let g:python_host_prog = expand('~/.pyenv/shims/python2')
@@ -90,12 +97,12 @@ let mapleader = "\<Space>"
 
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
-nnoremap <silent> <leader>a :Ack 
+nnoremap <silent> <leader>a :Ack
 nnoremap <silent> <leader>et :TestFile<cr>
 nnoremap <silent> <leader>ef :MixFormat<cr>
 
 " switch between buffers
-nnoremap <leader>bb :buffers<cr>:b<space> 
+nnoremap <leader>bb :buffers<cr>:b<space>
 nnoremap <leader><tab> :b#<cr>
 
 set nonumber
@@ -137,9 +144,13 @@ au BufRead,BufNewFile *.gui_script set filetype=lua
 au BufNewFile,BufRead *.script\|*.gui_script\|*.render_script\|*.editor_script\|*.lua_  setlocal filetype=lua
 au BufNewFile,BufRead *.vsh\|*.fsh\|*.fp\|*.vp setlocal filetype=glsl
 au BufRead,BufNewFile *.script.ts set filetype=typescript
+au BufRead,BufNewFile *.render_script.ts set filetype=typescript
 au BufRead,BufNewFile *.gui_script.ts set filetype=typescript
 au BufRead,BufNewFile *.ts set filetype=typescript
 au BufRead,BufNewFile *.tsx set filetype=typescript.tsx
+au Filetype json set conceallevel=0
+au Filetype js set conceallevel=0
+au Filetype json let g:indentLine_enabled = 0
 
 set sw=4
 set ts=4
@@ -196,12 +207,13 @@ au BufEnter * syn match error contained "\<binding.pry_remote\>"
 au BufEnter * syn match error contained "\<byebug\>"
 au BufEnter *.rb syn match error contained "\<debugger\>"
 
+autocmd BufWritePre *.mjs Neoformat prettier
 autocmd BufWritePre *.ts Neoformat prettier
 autocmd BufWritePre *.tsx Neoformat prettier
 autocmd BufWritePre *.script.ts Neoformat prettier
 autocmd BufWritePre *.gui_script.ts Neoformat prettier
 
-let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-pyright', 'coc-react-refactor', 'coc-clangd', 'coc-haxe', 'coc-zig', 'coc-lua', 'coc-defold-ide', 'coc-git', 'coc-rls']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-elixir', 'coc-pyright', 'coc-react-refactor', 'coc-clangd', 'coc-haxe', 'coc-lua', 'coc-defold-ide', 'coc-git']
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -212,6 +224,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
 
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -232,7 +245,8 @@ let g:coc_node_path = '~/.asdf/shims/node'
 let g:node_host_prog = '~/.asdf/shims/node'
 
 
-colorscheme lunar
+" colorscheme lunar
+colorscheme NeoSolarized
 
 
 map <leader>r :NERDTreeFind<cr>
@@ -247,3 +261,6 @@ set expandtab
 set shortmess=a
 
 let g:neoformat_only_msg_on_error = 1
+let g:vim_json_syntax_conceal = 0
+
+lua require("config")
